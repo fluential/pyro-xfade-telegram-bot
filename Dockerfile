@@ -30,4 +30,4 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-ENTRYPOINT ["/usr/bin/python3", "-u"]
+ENTRYPOINT ["/usr/bin/python3", "-u", "pyro.py"]
