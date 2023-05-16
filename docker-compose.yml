@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  pyro:
+    environment:
+      API_ID: ${API_ID}
+      API_HASH: ${API_HASH}
+      SESSION_STRING: ${SESSION_STRING}
+      MONGO_CON: ${MONGO_CON}
+      BOT_TOKEN: ${BOT_TOKEN}
+    working_dir: /app
+    build: .
+    image: "pyroff"
+    command: pyro.py

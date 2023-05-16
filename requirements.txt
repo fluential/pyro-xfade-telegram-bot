@@ -1,0 +1,11 @@
+#https://github.com/pyrogram/pyrogram/archive/master.zip
+Pyrogram==1.4.16
+readline0
+TgCrypto
+psutil
+pymongo
+dnspython
+apscheduler
+requests
+aiohttp
+json2html
