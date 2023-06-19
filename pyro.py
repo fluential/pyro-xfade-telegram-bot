@@ -1188,14 +1188,12 @@ async def callback_answer(app, callback_query):
     THANK_SNIPPETS = ['Great Job!' ,'Nice find!', 'Keep digging!', 'Real gem!', 'I like pizza better.', 'Can we not talk about it?', 'Secret weapon!', 'Bomb!', 'Real banger mate!', 'Proper mate!', "That's proper!", 'Proper init?', 'Bruv!', 'Ridicilous!', 'Say what?', "Not again?", "You joking?", 'Having bad day?', 'Having good day?', 'Nice one brother!',  'Nice one!'] 
     
     #await callback_query.answer(f"👌 {callback_query.data} - {random.choice(THANK_SNIPPETS)}\n🎵 {nowpl}{notice}", show_alert=True)
-    await callback_query.answer(f"👌 Voted {callback_query.data} for:\n🎵 {nowpl}{notice}", show_alert=True)
+    await callback_query.answer(f"👌 Voted {callback_query.data} for:\n🎵 {nowpl}{notice}\n\n(prev): {prev_track}\n(next): {next_track}", show_alert=True)
 
     if len(get_logs_history(callback_query.from_user.id)) > 0:
        snowpl = f'site:soundcloud.com {nowpl}'
 
-       await app.send_message(callback_query.from_user.id, f"👍 You #voted [{callback_query.data}]
-                              #v{callback_query.data} at {station} for 🎵 '{nowpl}'\n\n(prev):
-                              {prev_track}\n(next):{next_track}", disable_notification=False,
+       await app.send_message(callback_query.from_user.id, f"👍 You #voted [{callback_query.data}] #v{callback_query.data} at {station} for 🎵 '{nowpl}'", disable_notification=False,
                 reply_markup =  InlineKeyboardMarkup(
                 [
                    [  # First row
