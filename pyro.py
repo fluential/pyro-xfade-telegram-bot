@@ -1012,9 +1012,11 @@ async def get_api_nowplaying(callback_query, station, rid=None):
                 logger.info(now_playing)
                 logger.info(type(now_playing))
                 nowpl = now_playing['result']['nowplaying']
+                prev_track = now_playing['result']['prev_track'] or None
+                next_track = now_playing['result']['next_track'] or None
                 logger.info(f'NOW_PLAYING: {nowpl}')
                 log_track_vote(callback_query, nowpl, station)
-                return nowpl
+                return nowpl, prev_track, next_track
                 #await callback_query.answer(f"👍 You voted [{callback_query.data}] at {station} for:\n🎵 {now_playing['result']['nowplaying']}", show_alert=True)
         except Exception as e:
             logger.error('Could not get  PING_NOWPLAYING_WEBHOOK')
@@ -1141,11 +1143,10 @@ async def callback_answer(app, callback_query):
 
     if station in ('dev_club', 'DEV_CLUB', 'ROminimal.club'):
         logger.warning('==== DoktoKV Lookupe ===')
-        nowpl = await get_api_nowplaying(callback_query, station, rid)
-        logger.info(f'CURRENT_NOW_PLAYING: {nowpl}')
+        nowpl, prev_track, next_track = await get_api_nowplaying(callback_query, station, rid)
+        logger.info(f'CURRENT_NOW_PLAYING: {nowpl} | PREV_TRACK: {prev_track} | NEXT_TRACK: {next_track}')
         logger.info(f'DONE NOW_PLAYING Webhook: {PING_NOWPLAYING_WEBHOOK}/{station}/nowplaying')
     else: # =============== OBSOLETE BELOW ======================
-        logger.info('0x07')
         logger.info(f'New Track Meta: {trackno}-{number}-{maxtrack}-{action}')
         #with open(FLIST,"r") as file:
         #        flist = [ line.decode() for line in readline0.readline0(file_=file, separator=b'\0')]
@@ -1192,7 +1193,9 @@ async def callback_answer(app, callback_query):
     if len(get_logs_history(callback_query.from_user.id)) > 0:
        snowpl = f'site:soundcloud.com {nowpl}'
 
-       await app.send_message(callback_query.from_user.id, f"👍 You #voted [{callback_query.data}] #v{callback_query.data} at {station} for 🎵 '{nowpl}'", disable_notification=False,
+       await app.send_message(callback_query.from_user.id, f"👍 You #voted [{callback_query.data}]
+                              #v{callback_query.data} at {station} for 🎵 '{nowpl}'\n\n(prev):
+                              {prev_track}\n(next):{next_track}", disable_notification=False,
                 reply_markup =  InlineKeyboardMarkup(
                 [
                    [  # First row
