@@ -1193,7 +1193,7 @@ async def callback_answer(app, callback_query):
     if len(get_logs_history(callback_query.from_user.id)) > 0:
        snowpl = f'site:soundcloud.com {nowpl}'
 
-       await app.send_message(callback_query.from_user.id, f"👍 You #voted [{callback_query.data}] #v{callback_query.data} at {station} for 🎵 '{nowpl}'", disable_notification=False,
+       await app.send_message(callback_query.from_user.id, f"👍 You #voted [{callback_query.data}] #v{callback_query.data} at {station} for 🎵 '`{nowpl}`'", disable_notification=False,
                 reply_markup =  InlineKeyboardMarkup(
                 [
                    [  # First row
